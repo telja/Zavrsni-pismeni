@@ -1,0 +1,30 @@
+\section{Zvuk}
+
+Da bi igra bila korisniku što poželjnija potrebno je u nju postaviti zvuk. Zvuk daje korisniku osjećaj da stvarno upravlja sa nekim objektom. Glavna komponenta zvuka u Unity-u je "Audio Source". On reproducira zvuk u sceni preko "Audio Clip" svojstva. U tablici su prikazani formati zvuka koje podržava unity.  
+
+
+\begin{center}
+	\includegraphics[scale=0.75]{audioFormat.png}
+	
+	
+	Slika 5: Formati zvuka koje podržava Unity
+\end{center}
+
+
+\subsection{Postavljanje zvuka}
+Postavljanje zvuka u unity-u je vrlo jednostavno. Da bismo stvorili zvuk koji če se koristiti tokom igre potrebno je taj zvuk prvo prebaciti u unity projekt. Kada je zvuk u projektu dodjeli se objektu sa kojim ima komponentu "Audio Source". "Audio Source" komponenta sadrži mnogo svojstva. Jedno od svojstva je "Play on Awake" koje se koristi u "Main Menu" sceni. Ovo svojstvo pokreće željeni zvuk kada se igra pokrene. Unity svaku datoteku zvuka gleda kao "Audio Clip".
+
+\subsection{Audio Clip}
+"Audio Source" komponenta je beskorisna bez svojstva "Audio Clip". "Audio Source" je zapravo kontrola koja upravlja sa svojstvom "Audio Clip". Ako koristimo samo jedan zvuk dovoljno ga je samo ubaciti u objekt, a unity će sam napraviti komponentu i ubaciti taj zvuk u nju.
+
+Primjer ispuštanja zvuka:
+
+AudioSource audio;
+
+public AudioClip death;
+
+audio = GetComponent<AudioSource>();
+
+audio.PlayOneShot(death);
+
+

@@ -1,0 +1,92 @@
+\section{Objekti}
+
+
+
+\subsection{Player}
+Ovo je glavni objekt u igri. Napravljen je od više objekata u blenderu. S ovim objektom upravlja klasa "playerController". Sadrži sljedeće komponente:
+\begin{itemize}
+\item Transform --> Zadana komponenta svakog objekta koja određuje poziciju, rotaciju i veličinu objekta.
+
+\item Rigidbody --> Kontrolira poziciju objekta kroz fizičku simulaciju. Ovaj objekt ne koristi fiziku, ali je iskorištena njegva komponenta da se onemogući kretnja objekta po y osi.
+
+\item Sphere collider --> Služi za detekciju kolajdera u obliku kule. Time možemo postaviti veličinu radiusa za kolajder.
+
+\item Audio source --> Pridružen je objektu zbog ispuštanja zvuka kojeg objekt kontrolira.
+
+\item Animator --> Služi za kontrolu animacije objekta. U ovoj igri aniamcija je napravljena u Blender alatu. Objekt preko ove komponente upravlja sa svojom animacijom.
+
+\end{itemize}
+
+\subsection{PickUps}
+Ovo je prazan objekt u kojemu su smješteni objekti "PickUp" koje igrač skuplja u igri. S ovim objektom upravlja klasa "Rotator". Njegove komponente su:
+
+\begin{itemize}
+\item Transform
+
+\item Box Collider --> Služi za detekciju kolajdera u obliku kocke.
+Možemo postaviti x, y i z veličinu kolajdera.
+
+\item Mesh renderer --> Pomoću njega dodjeljujemo materijale objektu(boja), možemo definirati veličinu i sjenu. 
+
+\end{itemize}
+
+\subsection{Ghost}
+Postoje pet istih objekata "Ghost". Njima je pridružen tag "ghost" i "ghostCollor". Preko taga možemo upravljat s njima iz skripte drugog objekta. Njima upravlja klasa "ghostController" i svi imaju iste komponente:
+
+\begin{itemize}
+\item Transform
+
+\item Mesh renderer
+
+\item Capsule collider --> Služi za detekciju kolajdera u obliku kapsule. Možemo postaviti visinu i radijus kolajdera. Kolajder sadrži svojstvo "isTrigger" koje se koristi za triggering događaje.
+Npr:
+void OnTriggerEnter(Collider other)
+{
+	other.gameObject.SetActive(false);
+}
+
+
+\item Character controller --> Omogućuje kretanje objekta bez da se koristi Rigidbody i da se sudara sa drugim objektima tj. da ne prolazi kroz njih.
+
+\item Audio source
+
+\item Animator
+
+\item Nav Mesh Agent --> Omogućuje nam da se objekti ne sudaraju međusobno i sa drugim objektima tokom kretnje.
+
+\end{itemize}
+
+\subsection{Bonuses}
+Imamo četiri različita objekta bonus koji imaju iste komponente ali služe za različite stvari koje se kontroliraju u "playerController" klasi. Ovim objektima je pridružena skripta Yrotator koja ih rotira po y osi radi boljeg ugođaja tokom igranja igre. Nazivi objekata su: "ghostBusters", "ghostBuster", "lifeBonus" i "timeBonus". Njihove omponente su:
+
+\begin{itemize}
+\item Transform
+
+\item Mesh renderer
+
+\item Capsule colider
+
+\end{itemize}
+
+\subsection{Ground}
+Ovaj objekt je podloga na kojoj se igra odvija. Komponente podloge su:
+
+\begin{itemize}
+\item Transform
+
+\item Mesh renderer
+
+\end{itemize}
+\subsection{BackGround}
+Ovaj objekt je podloga koja se nalazi ispod glavne podloge na koji je nalijepljena slika zbog boljeg ambijenta tokom igranja.
+Imam iste komponente kao objekt "ground".
+
+\subsection{Canvas}
+Ovaj objekt u sebi sadži pet tekst komponenti i dva botuna. Tekst komponente služe za ispisivanje određenog sadržaja, a botuni za navigaciju kroz scene.
+
+\subsection{Direction light}
+Služi nam za postvljanje pozicije svjetla, namještanje sjene, jačina svijetla itd. Kao i svi drugi objekti sadrži transform komponentu.
+
+\subsection{Main Camera}
+Glavna kamera u igri koja prati igrača tokom njegove kretnje. Kretnju tokom igre mu omogućuje klasa "cameraController" koja je priključena na ovaj objekt.
+

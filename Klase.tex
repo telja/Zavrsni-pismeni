@@ -1,0 +1,139 @@
+\section{Klase}
+Svakom objektu je dodjeljena svoja zasebna klasa. Svaka klasa se nalazi u zasebnoj skripti. Klase koje nasljeđuju MOnoBehavior nesmiju imati konstruktre.
+Klase koje su kreirane za ovu igru su "mainMenu", "cameraControler", "Rotator", "Yrotator", "ghostController" i "packmanController".
+
+
+\subsection{Main Menu}
+Klasa "mainMenu" se nalazi u prvoj sceni. Ona upravlja botunima koji su postavljeni preko "onClick()" funkcije.
+\begin{itemize}
+\item void Start() --> Omogučava prikaz objekata:
+ mainMenu.enabled = true;
+
+\item public void exit() -->  Omogučava zatvaranje igre:
+ Application.Quit();
+
+\item public void playGame() --> Otvara "game" scenu.
+ SceneManager.LoadScene("game");
+
+\item public void menu() --> Otvara "mainMenu" scenu koja će se pozivati iz "game" scene.
+
+\end{itemize}
+\subsection{Camera Controller}
+
+Klasa "cameraController" se nalazi u "game" sceni i ona kontrolira kretanje kamere tokom igre. Funkcije koje se koriste:
+
+\begin{itemize}
+\item void Start () --> Postavlja kameru na početnu poziciju.
+ 
+\item void Update() --> Prati kretanje Packmana i pomiče kameru u tom smjeru.
+\end{itemize}
+\subsection{Rotator}
+Klasa "Rotator" koristi samo Update() petlju. Ova klasa služi za objekte koji će se rotirati po x, y, z osi.
+
+\subsection{Yrotator}
+Klasa "Yrotator" radi isto što i klasa "Rotator" ali rotira objekte samo po y osi.
+
+\subsection{Ghost Controller}
+Klasa koja upravlja s objektima "Ghost". Ti objekti imaju komponentu NavMeshAgent. NavMeshAgent komponenta omogućuje objektima koji se kreću ka istom cilju da se ne sudaraju.
+
+\begin{itemize}
+	
+\item void Start () --> Postavlja NavMeshAgent komponentu objektima "Ghost". U skriptu je dodana komponenta AudioSource koja će izpustiti zvuk kada jedan od objekata "Ghost" se sudari sa objektom "Player".
+Postavlja se brzina objekta: Ghost.speed = 30;
+Objekt "Player" smo dohvatili preko svojstva "Tag": 
+packMan = GameObject.FindGameObjectWithTag("Player");
+
+\item void Update() -->Funkcija koja objektima "Ghost" postavlja destinaciju: Ghost.destination = packMan.transform.position;
+
+\item void OnTriggerEnter(Collider other) --> Funkcija koja detektira kada ce se objekti "Ghost" sudariti sa objektom "Player". U koliko se to dogodi aktivira se AudioSource komponenta. Također ukoliko se objekti "Ghost" sudare sa nekim objektom koji predstavlja bonus, aktivacija tog objekta će se postaviti na "false".
+
+\end{itemize}
+
+\subsection{Packman Controller}
+Glavna klasa s kojom se kontrolira igrača i njegove komponente. Klasa je pridružena objektu "Player" koji je glavni objekt u igri. 
+
+Reference:
+
+\begin{itemize}
+\item public GameObject packman --> Referenca na igraca.
+
+\item public GameObject ghostBusters --> Referenca na bonus.
+
+\item public GameObject ghostBuster --> Referenca na bonus.
+
+\item public GameObject bonusTime --> Referenca na bonus.
+
+\item public GameObject bonusLife --> Referenca na bonus.
+
+\item public AudioClip numnum --> Referenca na određeni zvuk.
+
+\item public AudioClip eatGhost --> Referenca na određeni zvuk.
+
+\item public AudioClip eatBonus --> Referenca na određeni zvuk.
+
+\item public Text countObjects --> Referenca na text koji ispisuje koliko je objekata skupljeno.
+
+\item public Text time --> Referenca na text koji ispisuje koliko je vremena igraču ostalo.
+
+\item public Text winText --> Referenca na text koji se ispisuje ako igrač skupi sve "PickUp" objekte.
+
+\item public Text lifes --> Referenca na text koji ispisuje koliko igrač ima života.
+
+\item public Text countObjects --> Referenca na text koji ispisuje koliko je igrač skupio bodova.
+
+\item public Text pause --> Referenca na text koji ispisuje "Pause" kada korisnik pritisne bilo koji dio ekrana.
+
+\item private Vector3 up, right, left, down, currentDirection --> Određuje smjer kretnje igrača.
+
+\item int count --> Broji koliko je "PickUp" objekata ostalo.
+
+\item public float timeLeft --> Broji koliko je vremena ostalo.
+
+\item public GameObject[] ghostColor --> Niz djela "Ghost" objekta za bojanje.
+
+\item public GameObject[] ghosts --> Niz svih "Ghost" objekata.
+\item private Color color --> refrenca na boju.
+
+\item int lifeCount --> Broji koliko je života ostalo igraču.
+
+\item int tempTime --> Broji koliko je vremena ostalo do kraja igre.
+
+\item float bonusTimeLeft --> Broji koliko je vremena ostalo dok su bonusi aktivni.
+
+\item private float currentAcceleration --> Broj koji određuje poziciju y osi.
+
+Metode:
+
+
+\item void Start () --> Inicializira sve reference.
+
+\item void finalText(int final) --> Metoda koja ispisuje jeli korisnik pobjedio ili izgubio.
+
+\item void ghostStatus(bool status) --> Postavlja aktivnost objekata Ghost.
+
+\item void changeGhostColor(Color col) --> Postavlja boju objekata Ghost.
+
+\item Vector3 randomPosition() --> Vraća random vektor 3 za postavljanje pozicija bonusa.
+
+\item void pausePhone() --> Korisnik dodirom na ekran poziva ovu funkciju. Funkcija pauzira igru tako da zamrzne sliku i postavi aktivan plato koji ispisuje odgovarajući tekst i aktivira botun koji vodi korisnika na glavni izbornik. Ukoliko korisnik želi nastaviti igru treba opet pritisnuti dio ekrana na kojem se ne nalazi ovaj botun. 
+
+\item void activateBonuses() --> Funkcija koja svakih 30 sekundi aktivira bonuse i drži ih aktivnima 10 sekundi. Nakon što prođe 10 sekundi bonusi se deaktiviraju i pojavljuju opet za 20 sekundi.
+
+\item void checkGhost() --> Funkcija koja provjerava aktivnost objekata "Ghost". Nakon što igrač skupi određeni bonus objekti "Ghost" se deaktiviraju na 10 sekundi. Ova funkcija provjerava dali je prošlo 10 sekundi od skupljanja bonusa te ako je aktivira objekte Ghost.
+
+\item void setFinalEnviroment() --> Funkcija koja provjerava je li igrač ispunio uvjete da se pozove metodu finalText(int final).
+ 
+\item void setCanvas() --> Tokom igre na ekranu stoje 3 teksta. Jedan je za broj bodova koje je igrač skupio, drugi je za prestalo vrijeme igre a treći za broj života koji  je igraču ostao. Funkcija prikazuje na ekranu reference "time.tex"t, "lifes.text", "countObjects.text".
+
+\item float? getPhonePosition() --> Nakon svake dvije sekunde vrača poziciju y osi.
+
+\item void playerMoveAcceleration() --> Korisnik upravlja sa glavnim objektom "Player" preko akceleracije mobitela. Problem ovakvog upravljanja sa objektima je taj što se mobitel treba treba držati uvjek u istom položaju. Zato u sebi ova metoda sadrži metodu getPhonePosition(). Tako korisnik može igrati igru u bilo kojem položaju jer se svake dvije sekunde trenutna pozicija y osi postavlja na zadanu poziciju.
+
+\item void OnTriggerEnter(Collider other) --> Ova metoda detektira kada su se dva objekta sudarila. U ovoj metodi se nalaze najbitnije funkcionalnosti igre. Igrač se sudara sa objektima koje mora skupiti("Pick Up"), sa objektima koji ga hvataju("Ghost") i sa bonus objektima. Sa uvjetima je detektirano koji se sudar dogodio i time se vrši radnja nad tim objektima.
+
+ 
+\end{itemize}
+
+
+
+
