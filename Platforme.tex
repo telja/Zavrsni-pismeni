@@ -1,0 +1,31 @@
+\section{Platforme}
+Postoji puno alata na kojima se mogu izrađivati igre. Kada kreiramo neku igru cilj nam je da ta igra se može koristiti na što više platforma. Naravno to ovisi o kompleksnosti igre. Neke od bitnijih platforma koje podržava uniti su:
+\begin{itemize}
+\item Android
+\item Windows, Windows Phone
+\item Linux
+\item Mac, iOS
+\item Facebook Gameroom, Web GL
+\item Play Station 4, Play Station Vita, xBox one, Wii U
+\item Gear VR, Steam VR, Google Cardbard, Oculus Rift 
+\end{itemize}
+
+Svako računalo ima različite ulazne parametre. Igra koja zahtjeva puno ulaznih parametara za kontrolu će se najvjerovatnije napraviti za kompjutere jer nam tipkovnica nudi mogučnost da stavimo mnoštvo kontrola. Neke igre su dosta jednostavne i korisniku služe npr. dok čeka red u banci da to vrijeme iskoristi na zabavan način. Takva igra će se vjerovatno nalaziti na mobilnim uređajima. Ukoliko želimo napraviti igru koja će se nalaziti na skoro svim platformama potrebno je napraviti zabavnu ali kompleksnu igru sa što manje ulaznih parametara. U unity-u je to dosta jednostavno jer kada izrađujemo igru podijelimo kontrole za svaku platformu u kojoj želimo objaviti svoju igru. Ovaj rad se može koristiti na android i windows platformi. Nakon što se igra napravila samo je trebalo u postavkama izraditi za ove dvije platforme. U sljedečem ispisu se vidi kako su se u kodu podjelile kontrole koje služe za svaku platformu zasebno.
+
+\begin{verbatim}
+if (Application.platform == RuntimePlatform.WindowsPlayer)
+  {
+  playerMovePc();
+  pausePc();
+  }
+if (Application.platform == RuntimePlatform.Android)
+  {
+  playerMoveAcceleration();
+  pausePhone();
+  }
+
+\end{verbatim}
+\begin{center}
+	
+	Ispis : Prikaz dijeljenja kontrola za različite platforme
+\end{center}

@@ -1,13 +1,13 @@
 \section{Zvuk}
 
-Da bi igra bila korisniku što poželjnija potrebno je u nju postaviti zvuk. Zvuk daje korisniku osjećaj da stvarno upravlja sa nekim objektom. Glavna komponenta zvuka u Unity-u je "Audio Source". On reproducira zvuk u sceni preko "Audio Clip" svojstva. U tablici su prikazani formati zvuka koje podržava unity.  
+Da bi igra bila korisniku što poželjnija potrebno je u nju postaviti zvuk. Zvuk daje korisniku osjećaj da stvarno upravlja sa nekim objektom. Glavna komponenta zvuka u unity-u je "Audio Source". On reproducira zvuk u sceni preko "Audio Clip" svojstva. U tablici su prikazani formati zvuka koje podržava unity.  
 
 
 \begin{center}
 	\includegraphics[scale=0.75]{audioFormat.png}
 	
 	
-	Slika 5: Formati zvuka koje podržava Unity
+	Slika 8: Formati zvuka koje podržava Unity
 \end{center}
 
 
@@ -16,9 +16,11 @@ Postavljanje zvuka u unity-u je vrlo jednostavno. Da bismo stvorili zvuk koji č
 
 \subsection{Audio Clip}
 "Audio Source" komponenta je beskorisna bez svojstva "Audio Clip". "Audio Source" je zapravo kontrola koja upravlja sa svojstvom "Audio Clip". Ako koristimo samo jedan zvuk dovoljno ga je samo ubaciti u objekt, a unity će sam napraviti komponentu i ubaciti taj zvuk u nju.
-
+\newpage
 Primjer ispuštanja zvuka:
 
+
+\begin{verbatim}
 AudioSource audio;
 
 public AudioClip death;
@@ -26,5 +28,23 @@ public AudioClip death;
 audio = GetComponent<AudioSource>();
 
 audio.PlayOneShot(death);
+
+\end{verbatim}
+\begin{center}
+	
+	Ispis 3: Prikaz ispuštanja zvuka
+\end{center}
+
+\subsection{Zvučni oslušivač}
+Unity nam nudi više mogućnosti kako da prenesemo zvuk do korisnika. To nam omgućuju funkcije na daljinu (distance functions) koje se nalaze na kraju komponente "Audio Source" i mogu se namještati preko grafa. Ove funkcije se koriste da korisnik dobije dojam da se stvarno nalazi u igri. Možemo namjestiti kut odakle zvuk dolazi, jačinu zvuka, brzinu zvuka itd. Ove mogućnosti se koriste dosta za igre koje su kreirane za virtualnu realnost i ne mogu se koristiti za 2D igre.
+\newline
+Na sljedećoj slici je prikazan graf za zvučni osluškivač.
+
+\begin{center}
+	\includegraphics[scale=0.60]{zvucniOsluskivac.png}
+	
+	
+	Slika 9: Prikaz grafa zvučnog osluškivača
+\end{center}
 
 

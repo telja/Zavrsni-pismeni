@@ -1,51 +1,147 @@
 \section{Klase}
-Svakom objektu je dodjeljena svoja zasebna klasa. Svaka klasa se nalazi u zasebnoj skripti. Klase koje nasljeđuju MOnoBehavior nesmiju imati konstruktre.
+Svakom objektu je dodjeljena svoja zasebna klasa. Svaka klasa se nalazi u zasebnoj skripti. Klase koje nasljeđuju MonoBehavior ne smiju imati konstruktore, to su bazne klase.
 Klase koje su kreirane za ovu igru su "mainMenu", "cameraControler", "Rotator", "Yrotator", "ghostController" i "packmanController".
 
 
 \subsection{Main Menu}
-Klasa "mainMenu" se nalazi u prvoj sceni. Ona upravlja botunima koji su postavljeni preko "onClick()" funkcije.
+Klasa "mainMenu" se nalazi u oba dvije scene. Ona upravlja sa platnom koji sadrži botune koji su postavljeni preko "onClick()" funkcije.
 \begin{itemize}
-\item void Start() --> Omogučava prikaz objekata:
- mainMenu.enabled = true;
+\item void Start() --> Omogučava prikaz objekata.
 
-\item public void exit() -->  Omogučava zatvaranje igre:
- Application.Quit();
+\item public void exit() -->  Omogučava zatvaranje igre.
 
 \item public void playGame() --> Otvara "game" scenu.
- SceneManager.LoadScene("game");
+ 
 
-\item public void menu() --> Otvara "mainMenu" scenu koja će se pozivati iz "game" scene.
+\item public void menu() --> Otvara "mainMenu" scenu koja će se pozivati iz "game" scene. Prikaz klase se nalazi u sljedečem ispisu.
 
+
+\begin{verbatim}
+public class MainMenu : MonoBehaviour {
+	public Canvas mainMenu;
+	void Start () {
+		mainMenu.enabled = true;}
+	public void exit()
+	{
+		mainMenu.enabled = false;
+		Application.Quit();
+	}
+	public void playGame()
+	{
+		SceneManager.LoadScene("game");
+	}
+	public void menu(){
+		SceneManager.LoadScene("mainMenu");
+	}}
+
+
+\end{verbatim}
+\begin{center}
+	
+	Ispis 2: Prikaz klase "MainMenu"
+\end{center}
 \end{itemize}
+
+
+
 \subsection{Camera Controller}
 
 Klasa "cameraController" se nalazi u "game" sceni i ona kontrolira kretanje kamere tokom igre. Funkcije koje se koriste:
 
 \begin{itemize}
-\item void Start () --> Postavlja kameru na početnu poziciju.
+\item void Start () --> Postavlja kameru na početnu poziciju s obzirom na poziciju igrača.
  
-\item void Update() --> Prati kretanje Packmana i pomiče kameru u tom smjeru.
+\item void Update() --> Prati kretanje igrača, pomiče i rotira kameru u tom smjeru.
+
+
 \end{itemize}
+
+\begin{verbatim}
+public class cameraController : MonoBehaviour {
+
+public GameObject packman;
+
+private Vector3 offset;
+// Use this for initialization
+void Start () {
+offset = transform.position - packman.transform.position;
+
+}
+// Update is called once per frame
+void Update () {
+transform.position = packman.transform.position + offset;
+}
+}
+\end{verbatim}
+\begin{center}
+	
+	Ispis 3: Prikaz klase "cameraController"
+\end{center}
+
 \subsection{Rotator}
-Klasa "Rotator" koristi samo Update() petlju. Ova klasa služi za objekte koji će se rotirati po x, y, z osi.
+Klasa "Rotator" koristi samo Update() petlju. Ova klasa služi za objekte koji će se rotirati po x, y, z osi. Ona upravlja sa "pickUp" objektima. Klasa "Rotator" je prikazana u sljedečem ispisu.
+\begin{verbatim}
+public class Rotator : MonoBehaviour {
+
+// Update is called once per frame
+void Update () {
+transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime);
+}
+}
+\end{verbatim}
+\begin{center}
+	
+	Ispis 4: Prikaz klase "Rotator"
+\end{center}
+
 
 \subsection{Yrotator}
-Klasa "Yrotator" radi isto što i klasa "Rotator" ali rotira objekte samo po y osi.
+Klasa "Yrotator" radi isto što i klasa "Rotator" ali rotira objekte samo po y osi. Ona upravlja sa objektima koji predstavljaju bonuse.
 
 \subsection{Ghost Controller}
 Klasa koja upravlja s objektima "Ghost". Ti objekti imaju komponentu NavMeshAgent. NavMeshAgent komponenta omogućuje objektima koji se kreću ka istom cilju da se ne sudaraju.
 
 \begin{itemize}
 	
-\item void Start () --> Postavlja NavMeshAgent komponentu objektima "Ghost". U skriptu je dodana komponenta AudioSource koja će izpustiti zvuk kada jedan od objekata "Ghost" se sudari sa objektom "Player".
-Postavlja se brzina objekta: Ghost.speed = 30;
-Objekt "Player" smo dohvatili preko svojstva "Tag": 
-packMan = GameObject.FindGameObjectWithTag("Player");
+\item void Start () --> Postavlja "NavMeshAgent" komponentu objektima "Ghost". U skriptu je dodana komponenta AudioSource koja će izpustiti zvuk kada jedan od objekata "Ghost" se sudari sa objektom "Player".
+Postavlja se brzina objekta: \\"Ghost.speed = 30;".\\
+Objekt "Player" smo dohvatili preko svojstva "Tag":\\ 
+"packMan = GameObject.FindGameObjectWithTag("Player");"
 
-\item void Update() -->Funkcija koja objektima "Ghost" postavlja destinaciju: Ghost.destination = packMan.transform.position;
+\item void Update() -->Funkcija koja objektima "Ghost" postavlja destinaciju:\\ "Ghost.destination = packMan.transform.position;".
 
-\item void OnTriggerEnter(Collider other) --> Funkcija koja detektira kada ce se objekti "Ghost" sudariti sa objektom "Player". U koliko se to dogodi aktivira se AudioSource komponenta. Također ukoliko se objekti "Ghost" sudare sa nekim objektom koji predstavlja bonus, aktivacija tog objekta će se postaviti na "false".
+\item void OnTriggerEnter(Collider other) --> Funkcija koja detektira kada ce se objekti "Ghost" sudariti sa objektom "Player". U koliko se to dogodi aktivira se AudioSource komponenta. Također ukoliko se objekti "Ghost" sudare sa nekim objektom koji predstavlja bonus, aktivacija tog objekta će se postaviti na "false".\\ Prikaz funkcije se nalazi u sljedečem ispisu.
+
+\begin{verbatim}
+void OnTriggerEnter(Collider other)
+{
+	if (other.gameObject.CompareTag("Player"))
+	{
+	audio.PlayOneShot(death);
+	}
+	if (other.gameObject.CompareTag("ghostBusters"))
+	{
+	other.gameObject.SetActive(false);
+	}
+	if (other.gameObject.CompareTag("ghostBuster"))
+	{
+	other.gameObject.SetActive(false);
+	}
+	if (other.gameObject.CompareTag("timeBonus"))
+	{
+	other.gameObject.SetActive(false);
+	}
+	if (other.gameObject.CompareTag("lifeBonus"))
+	{
+	other.gameObject.SetActive(false);
+	}
+}
+
+\end{verbatim}
+\begin{center}
+	
+	Ispis 5: Prikaz funkcije "OnTriggerEnter()"
+\end{center}
 
 \end{itemize}
 
@@ -108,29 +204,222 @@ Metode:
 \item void Start () --> Inicializira sve reference.
 
 \item void finalText(int final) --> Metoda koja ispisuje jeli korisnik pobjedio ili izgubio.
+ Funkcija je prikazana u sljedečem ispisu.
+
+\begin{verbatim}
+void finalText(int final)
+{
+	if (final == 0)
+	{
+	winText.text = "You Win!";
+	winText.color = Color.blue;
+	mainMenu.gameObject.SetActive(true);
+	playAgain.gameObject.SetActive(true);
+	}
+	else
+	{
+	winText.text = "Game Over!";
+	winText.color = Color.red;
+	mainMenu.gameObject.SetActive(true);
+	playAgain.gameObject.SetActive(true);
+	lifeCount = 0;
+	packman.gameObject.SetActive(false);
+	}
+}
+\end{verbatim}
+\begin{center}
+	
+	Ispis 6: Prikaz funkcije "finalText()"
+\end{center}
+
+
 
 \item void ghostStatus(bool status) --> Postavlja aktivnost objekata Ghost.
 
 \item void changeGhostColor(Color col) --> Postavlja boju objekata Ghost.
 
-\item Vector3 randomPosition() --> Vraća random vektor 3 za postavljanje pozicija bonusa.
+\item Vector3 randomPosition() --> Vraća random vektor 3 za postavljanje pozicija bonusa na mapi.
 
-\item void pausePhone() --> Korisnik dodirom na ekran poziva ovu funkciju. Funkcija pauzira igru tako da zamrzne sliku i postavi aktivan plato koji ispisuje odgovarajući tekst i aktivira botun koji vodi korisnika na glavni izbornik. Ukoliko korisnik želi nastaviti igru treba opet pritisnuti dio ekrana na kojem se ne nalazi ovaj botun. 
+\item void pausePhone() --> Korisnik dodirom na ekran poziva ovu funkciju. Funkcija pauzira igru tako da zamrzne sliku i postavi aktivno platno koje ispisuje odgovarajući tekst i aktivira botun koji vodi korisnika na glavni izbornik. Ukoliko korisnik želi nastaviti igru treba opet pritisnuti dio ekrana na kojem se ne nalazi ovaj botun. 
 
+ Funkcija je prikazana u sljedečem ispisu.
+
+\begin{verbatim}
+void pausePhone()
+{
+if (Input.touchCount > 0)
+{
+paused = !paused;
+}
+if (paused)
+{
+Time.timeScale = 0;
+pause.text = "Paused";
+mainMenu.gameObject.SetActive(true);
+}
+else
+{
+Time.timeScale = 1;
+pause.text = "";
+mainMenu.gameObject.SetActive(false);
+}}
+\end{verbatim}
+\begin{center}
+	
+	Ispis 7: Prikaz funkcije "pausePhone()"
+\end{center}
+
+\item void pausePc() --> Ova funkcija služi kada se igra koristi na PC-u, Mac-u ili Linux-u. Funkcija pauzira igru pritiskom na tipku "P". \\Ova funkcija ima istu ulogu kao "pausePhone()" funkcija, ali se koristi za gore navedene platforme.
 \item void activateBonuses() --> Funkcija koja svakih 30 sekundi aktivira bonuse i drži ih aktivnima 10 sekundi. Nakon što prođe 10 sekundi bonusi se deaktiviraju i pojavljuju opet za 20 sekundi.
 
-\item void checkGhost() --> Funkcija koja provjerava aktivnost objekata "Ghost". Nakon što igrač skupi određeni bonus objekti "Ghost" se deaktiviraju na 10 sekundi. Ova funkcija provjerava dali je prošlo 10 sekundi od skupljanja bonusa te ako je aktivira objekte Ghost.
+\item void checkGhost() --> Funkcija koja provjerava aktivnost objekata "Ghost". Nakon što igrač skupi određeni bonus objekti "Ghost" se deaktiviraju na 10 sekundi. Ova funkcija provjerava da li je prošlo 10 sekundi od skupljanja bonusa te ako je aktivira objekte Ghost.
 
-\item void setFinalEnviroment() --> Funkcija koja provjerava je li igrač ispunio uvjete da se pozove metodu finalText(int final).
+\item void setFinalEnviroment() --> Funkcija koja provjerava je li igrač ispunio uvjete da se pozove metodu finalText(int final). Provjerava je li igrač ima dovoljno života, je li preostalo vrijeme za igru još aktivno i koliko je igrač skupio bodova.
  
-\item void setCanvas() --> Tokom igre na ekranu stoje 3 teksta. Jedan je za broj bodova koje je igrač skupio, drugi je za prestalo vrijeme igre a treći za broj života koji  je igraču ostao. Funkcija prikazuje na ekranu reference "time.tex"t, "lifes.text", "countObjects.text".
+\item void setCanvas() --> Tokom igre na ekranu stoje 3 teksta. Jedan je za broj bodova koje je igrač skupio, drugi je za prestalo vrijeme igre a treći za broj života koji  je igraču ostao. Funkcija prikazuje na ekranu reference:
 
-\item float? getPhonePosition() --> Nakon svake dvije sekunde vrača poziciju y osi.
+\subitem"time.text
+\subitem"lifes.text"
+\subitem"countObjects.text"
 
-\item void playerMoveAcceleration() --> Korisnik upravlja sa glavnim objektom "Player" preko akceleracije mobitela. Problem ovakvog upravljanja sa objektima je taj što se mobitel treba treba držati uvjek u istom položaju. Zato u sebi ova metoda sadrži metodu getPhonePosition(). Tako korisnik može igrati igru u bilo kojem položaju jer se svake dvije sekunde trenutna pozicija y osi postavlja na zadanu poziciju.
+\item float? getPhonePosition() --> Nakon svake dvije sekunde vrača poziciju y osi. Prikaz funkcije se nalazi u sljedečem ispisu.
 
-\item void OnTriggerEnter(Collider other) --> Ova metoda detektira kada su se dva objekta sudarila. U ovoj metodi se nalaze najbitnije funkcionalnosti igre. Igrač se sudara sa objektima koje mora skupiti("Pick Up"), sa objektima koji ga hvataju("Ghost") i sa bonus objektima. Sa uvjetima je detektirano koji se sudar dogodio i time se vrši radnja nad tim objektima.
+\begin{verbatim}
+float? getPhonePosition()
+{
+	int tl = (int)Mathf.Round(timeLeft);
+	float tmpcurrentAcceleration;
+	if (tl % 2 == 0)
+	{
+	tmpcurrentAcceleration = Input.acceleration.y;
+	return tmpcurrentAcceleration;
+	}
+	else
+	{
+	return null;
+	}}
 
+\end{verbatim}
+\begin{center}
+	
+	Ispis 8: Prikaz funkcije "getPhonePosition()"
+\end{center}
+
+
+
+\item void playerMoveAcceleration() --> Korisnik upravlja sa glavnim objektom "Player" preko akceleracije mobitela. Problem ovakvog upravljanja sa objektima je taj što se mobitel treba držati uvjek u istom položaju. Zato u sebi ova metoda sadrži metodu getPhonePosition(). Tako korisnik može igrati igru u bilo kojem položaju jer se svake dvije sekunde trenutna pozicija y osi postavlja na zadanu poziciju.
+
+
+\begin{verbatim}
+void playerMoveAcceleration(){
+float x = Input.acceleration.x;
+float y = Input.acceleration.y;
+if (currentDirection != down)
+{
+if (y > currentAcceleration && (x < 0.04f || x > -0.04f))
+currentDirection = up;
+if (x > 0.04f)
+{
+currentDirection = right;
+y = currentAcceleration;
+}
+if (x < -0.04f)
+{
+currentDirection = left;
+y = currentAcceleration;
+}
+if (y < currentAcceleration - 0.02f && (x < 0.04f || x > -0.04f))
+currentDirection = down;
+}
+if (currentDirection != up)
+{
+if (y > currentAcceleration + 0.02f && (x < 0.04f || x > -0.04f))
+currentDirection = up;
+if (x > 0.04f)
+{
+currentDirection = right;
+y = currentAcceleration;
+}
+if (x < -0.04f)
+{
+currentDirection = left;
+y = currentAcceleration;
+}
+if (y < currentAcceleration && (x < 0.04f || x > -0.04f))
+currentDirection = down;
+}}
+\end{verbatim}
+\begin{center}
+	
+	Ispis 9: Prikaz funkcije "playerMoveAcceleration()"
+\end{center}
+
+\item void playerMovePC() --> Funkcija za opravljanje objektom "Player" preko tipkovnice računala. U sljedečem ispisu su prikazane kontrole za računalo.
+\begin{verbatim}
+void playerMovePc()
+{
+if (Input.GetKey(KeyCode.UpArrow))
+{
+currentDirection = up;
+}
+else if (Input.GetKey(KeyCode.RightArrow))
+{
+currentDirection = right;
+}
+else if (Input.GetKey(KeyCode.DownArrow))
+{
+currentDirection = down;
+}
+else if (Input.GetKey(KeyCode.LeftArrow))
+{
+currentDirection = left;
+}
+else
+isMoving = false;
+}
+\end{verbatim}
+\begin{center}
+	
+	Ispis 10: Prikaz funkcije "playerMovePc()"
+\end{center}
+\item void OnTriggerEnter(Collider other) --> Ova metoda detektira kada su se dva objekta sudarila. U ovoj metodi se nalaze najbitnije funkcionalnosti igre. Igrač se sudara sa objektima koje mora skupiti("Pick Up"), sa objektima koji ga hvataju("Ghost") i sa bonus objektima. Sa uvjetima je detektirano koji se sudar dogodio i time se vrši radnja nad tim objektima. Prikaz funkcionalnosti kolizije objekta "Player" sa objektom "Ghost" se nalazi u sljedečem ispisu.
+
+\newpage
+\begin{verbatim}
+if (other.gameObject.CompareTag("ghost"))
+{
+	int count=0;
+	ghostColor = GameObject.FindGameObjectsWithTag("ghostColor");
+	foreach (GameObject ghost in ghostColor)
+	{
+	if (ghost.GetComponent<Renderer>().material.color == Color.black )
+	{
+	count++;
+	}}
+	if (count > 0)
+	{
+	bonusTimeLeft = 10;
+	audio.PlayOneShot(eatGhost);
+	foreach (GameObject ghost in ghosts)
+	{
+	if (other.gameObject == ghost)
+	ghost.SetActive(false);
+	}}
+	else
+	{
+	lifeCount--;
+	if (lifeCount > 0)
+	packman.transform.position = new Vector3(0, 4, 0);
+	else
+	{
+	packman.gameObject.SetActive(false);
+	finalText(1);
+}}}
+\end{verbatim}
+\begin{center}
+	
+	Ispis 11: Prikaz funkcionalnosti kolizije objekta "Player" sa objektom "Ghost"
+\end{center}
  
 \end{itemize}
 

@@ -1,6 +1,6 @@
 \section{Unity}
 \subsection{Sučelje}
-Glavno sučelje unity-a sadrži više prozora koji se mogu grupirati po želji korisnika. Sučelje se sastoji od alatne trake. hierarhijskog prozora, pogleda na scenu, inspektora i prozora projekta.
+Glavno sučelje unity-a sadrži više prozora koji se mogu grupirati po želji korisnika. Sučelje se sastoji od alatne trake, hierarhijskog prozora, pogleda na scenu, inspektora i prozora projekta.
 
 \subsubsection{Prozor projekta}
 Prozor projekta prikazuje sve datoteke koje se koriste u projektu. Preporučava se napraviti direktorije u kojima se raspoređuju skripte, zvukovi, animacije i ostali objekti. Kada uključujemo neke segmente u projekt oni će se pojaviti u prozoru projekta.
@@ -10,19 +10,29 @@ Prozor projekta prikazuje sve datoteke koje se koriste u projektu. Preporučava 
 Alatna traka omogućuje najbitnije funkcionalnosti za kreiranje igre. Na lijevoj strani se nalaze alati pomoću kojih možemo upravljati sa scenom i sa objektima koji su u sceni. Objektima možemo postaviti visinu, dužinu, koordinate trenutnog položaja itd. Na sredini se nalaze "play", "pause" i "stop" kontrole koje omogućuju testiranje igre. Na desnoj strani se nalaze kontrole za oblak servis i osobni unity račun te kontrole za postavljanje rasporeda sučelja po korisnikovoj želji.
 
 \subsubsection{Pogled na scenu}
-Scena nam prikazuje 3D ili 2D objekte, ovisno o vrsti projekta na kojem radimo. Pogled na scenu omogućava programeru da vizualno upravlja svojom igrom. Osim pogleda na scenu imamo i pogled na igru (game view) koji programeru omogućva testiranje svoje igre te pronalaženje pogrešaka.
+Scena nam prikazuje 3D ili 2D objekte, ovisno o vrsti projekta na kojem radimo. Pogled na scenu omogućava programeru da vizualno upravlja svojom igrom. Osim pogleda na scenu imamo i pogled na igru (game view) koji programeru omogućava testiranje svoje igre te pronalaženje pogrešaka. Pogled na igru koristimo da ne trebamo nakon svake izmjene u igri ponovno izrađivati igru. On se pokrene tako da na alatnoj traci odaberemo opciju "play". Glavne opcije pogleda na igru su "Free Aspect", "Scale", "Maximize on play", "Mute audio" i "Stats". 
+\begin{itemize}
+	\item "Free Aspect" nam omogučuje da testiramo kako će igra izgledati na različitim proporcijama ekrana. 
+	
+	\item "Scale" nam omogučuje da zumiramo igru da vidimo detalje koje se nalaze u igri.
+	
+	\item "Maximize on play" postavka nam služi da vidimo igru preko cijelog zaslona dok je testiramo u pogledu na igru.
+	
+	\item "Mute audio" postavka nam služi da tokom testiranja igre isključimo ili uključimo zvuk.
+	
+	\item "Stats" nam prikazuje sve statistike zvuka i grafike u igri.
+	
+\end{itemize}
 
 
 \subsubsection{Hierarhiski prozor}
-Ovdje možemo vidjeti kako su objekti pridruženi drugim objektima vizualno, što pomaže pri pisanju koda. Hierarhiski prozor će prikazati one objekte koji su u sceni koju trenutno uređujemo.
+Ovdje možemo vidjeti kako su objekti pridruženi drugim objektima vizualno, što pomaže pri pisanju koda. Hierarhiski prozor će prikazati one objekte koji su u sceni koju trenutno uređujemo. Klikom na neki objekt inspektor će prikazati njegove komponente. U hierarhiskom prozoru možemo desnim klikom duplicirati bilo koji objekt. Također možemo vidjeti relacije roditelja i djece.
 
 \subsubsection{Konzola}
-Konzola nas obavještava kada se dogodi neka greška, upozorenje ili iznimka. Konzola je dosta praktična jer  preko nje možemo saznati što nam se u kojem trenutku događa u projektu i to preko funkcije "Debug.Log()". 
+Konzola nas obavještava kada se dogodi neka greška, upozorenje ili iznimka. Konzola je dosta praktična jer  preko nje možemo saznati što nam se u kojem trenutku događa u projektu i to preko funkcije:\\ "Debug.Log();". 
 
 \subsubsection{Inspektor}
-Inspektor omogućuje da imamo uvid u sva svojstva trenutno odabranog objekta. Preko njega možemo mjenjati komponente objekta. Odabirom nekog objekta inspektor ce automatski komponente tog objekta prikazati u svom prozoru.
-
-
+Inspektor omogućuje da imamo uvid u sva svojstva trenutno odabranog objekta. Preko njega možemo mjenjati komponente objekta. Odabirom nekog objekta inspektor ce automatski komponente tog objekta prikazati u svom prozoru. U koliko nije nijedan objekt selektiran inspektor će biti prazan. U koliko je neki objekt napravljen u nekom drugom alatu inspektor nudi opciju "open" koja će korisnika odvesti u taj alat i u njemu prikazati selektirani objekt. Ova opcija je dosta korisna jer ako smo navikli raditi objekte u drugom alatu i vidimo u pogledu na igru da neki dio objekta želimo izmjeniti možemo vrlo jednostavno u tom alatu izmjeniti objekt i nastaviti ga normalno koristiti u unity-u.
 
 
 \begin{center}
@@ -36,11 +46,11 @@ Assets-i su ukjučeni ili kreirani objekti. Assets-i mogu biti 3D modeli, zvuk, 
 
 
 \subsection{Objekti}
-Sve što se nalazi na sceni je objekt. Objekti se mogu kreirati u unity-u ili pridružiti ih iz drugog alata. Svaki objekt u sebi sadrži sljedeće osobine: ime, tag, sloj i static. Autor sam može proizvoljno dati ime svom objektu po želji. Tagovi su jako poželjni kada se referenciraju objekti u kodu. Traženje objekata preko tagova olakšava posao programeru pogotovo kada se radi na većim projektima. Kada više razlićitih objekata rade istu stvar onda je poželjno koristiti tag. Objekti mogu biti dodjeljeni drugom sloju. Static se koristi za objekte koji su statični.
+Sve što se nalazi na sceni je objekt. Objekti se mogu kreirati u unity-u ili pridružiti ih iz drugog alata. Svaki objekt u sebi sadrži sljedeće osobine: ime, tag, sloj i static. Autor sam može proizvoljno dati ime svom objektu po želji. Tagovi su jako poželjni kada se referenciraju objekti u kodu. Traženje objekata preko tagova olakšava posao programeru pogotovo kada se radi na većim projektima. Kada više razlićitih objekata rade istu stvar onda je poželjno koristiti tag. Objekti mogu biti dodjeljeni drugom sloju. Static se koristi za objekte koji su statični. Svaki objekt ima svoje komponente koje se nalaze u inspektor prozoru.
 
 
 \subsection{Komponente}
-Svaki objekt mora sadržavati neke komponente. Pri kreiranju objekta njemu će se dodjeliti "Transform" komponenta koja prikazuje poziciju, rotaciju i visinu objekta. Bez ove komponente objekt bi bio nevidljiv na sceni. Neke od komponenata su "Character Controller", "Nav Mesh Agent", "Rigidbody" itd.
+Svaki objekt mora sadržavati neke komponente. Pri kreiranju objekta njemu će se dodjeliti zadana "Transform" komponenta koja prikazuje poziciju, rotaciju i visinu objekta. Bez ove komponente objekt bi bio nevidljiv na sceni. Komponente u inspektor prozoru možemo poredati po želji. Neke od komponenata su "Character Controller", "Nav Mesh Agent", "Rigidbody" itd.
 
 
 \subsection{Montaža (Prefab)}
@@ -48,7 +58,7 @@ Prefab možemo gledati kao objekt na koji je korisnik postavio instancu. Kada se
 
 \subsection{Pisanje koda}
 \subsubsection{Programski jezici}
-U unity platformi se može kreirati igra korištenjem jednog od tri programska jezika,a oni su c sharp, javaScript i Boo. Prednosti c sharp programskog jezika prema java scriptu je to što se lakše otkrivaju pogreške u kodu. Java script se često koristi u Unity-u. Često se naziva i Unity Script. Prednosti java scripta prema c sharp-u su jednostavnija sintaksa java script programskog jezika i mnogo primjera koje se mogu naći na internetu. Programski jezik Boo se jako malo koristi u Unity-u i ima samo nekolicinu primjera na internetu što korisnika automatski udaljuje od ovog jezika. 
+U unity platformi se može kreirati igra korištenjem jednog od tri programska jezika,a oni su c sharp, java script i Boo. Prednosti c sharp programskog jezika prema java scriptu je to što se lakše otkrivaju pogreške u kodu. Java script se često koristi u unity-u. Često se naziva i Unity Script. Prednosti java scripta prema c sharp-u su jednostavnija sintaksa java script programskog jezika i mnogo primjera koje se mogu naći na internetu. Programski jezik Boo se jako malo koristi u unity-u i ima samo nekolicinu primjera na internetu što korisnika automatski udaljuje od ovog jezika. 
 
 
 \subsubsection{Petlje}
@@ -60,11 +70,11 @@ Kada se kreira skripta unity će automatski kreirati "Start()" funkciju i "Updat
 Slika 2: Arhitektura igre
 \end{center}
 \subsection{Fizika}
-Svaki objekt koji ima veze sa fizikom mora sadržavati RigidBody i Collider komponente. Glavne komponente RigidBody-a su "Use Gravity" i "Is Kinematic".
+Svaki objekt koji ima veze sa fizikom mora sadržavati "RigidBody" i "Collider" komponente. Glavne komponente "RigidBody-a" su "Use Gravity" i "Is Kinematic".
 "Use Gravity" jednostavno znači da će se tom objektu postaviti gravitacija s obzirom na komponentu "Mass". Komponenta "Is Kinematic" se koristi kada korisnik želi tokom igre upravljati sa objektom preko transfom funkcije. "Use Gravity" i "Is Kinematic" komponente su tipa bool i njih postavljamo u inspektoru.
 
 \subsection{Kamera}
-Svaka scena mora sadržavati barem jednu kameru. Kada se scena kreira kreira se i objekt glavna kamera. Preko kamere određujemo da li je igra "first person game" ili "third person game".
+Svaka scena mora sadržavati barem jednu kameru. Kada se scena kreira, kreira se i objekt glavna kamera. Preko kamere određujemo da li je igra "first person game" ili "third person game". Zadane komponentne kamere nam omogučuja da u startu postavimo širinu pogleda, dizajn neba, projekciju, početnu poziciju i pozadinu.
 
 
 
